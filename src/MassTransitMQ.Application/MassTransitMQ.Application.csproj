@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -6,9 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="11.1.0" />
+	</ItemGroup>
+
   <ItemGroup>
+    <ProjectReference Include="..\MassTransitMQ.Application.Shared\MassTransitMQ.Application.Shared.csproj" />
     <ProjectReference Include="..\MassTransitMQ.Domain\MassTransitMQ.Domain.csproj" />
-    <ProjectReference Include="..\MassTransitMQ.Infra\MassTransitMQ.Infra.IoC\MassTransitMQ.Infra.IoC.csproj" />
+    <ProjectReference Include="..\MassTransitMQ.Infra\MassTransitMQ.Infra.Data\MassTransitMQ.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

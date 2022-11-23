@@ -1,4 +1,4 @@
-namespace MassTransitMQ.Domain.Commands
+namespace MassTransitMQ.Application.Commands
 {
     public class OrderMessaging
     {
