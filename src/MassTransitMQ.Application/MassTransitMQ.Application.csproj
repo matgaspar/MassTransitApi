@@ -7,13 +7,18 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MassTransit" Version="8.0.8" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.8" />
 		<PackageReference Include="MediatR" Version="11.1.0" />
 	</ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MassTransitMQ.Application.Shared\MassTransitMQ.Application.Shared.csproj" />
     <ProjectReference Include="..\MassTransitMQ.Domain\MassTransitMQ.Domain.csproj" />
     <ProjectReference Include="..\MassTransitMQ.Infra\MassTransitMQ.Infra.Data\MassTransitMQ.Infra.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Queries\Order\GetAll\" />
   </ItemGroup>
 
 </Project>

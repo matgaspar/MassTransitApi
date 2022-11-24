@@ -1,4 +1,4 @@
-﻿using MassTransitMQ.Infra.Data.Repositories.Interfaces;
+﻿using MassTransitMQ.Domain.Interfaces.Data.Repositories;
 using MediatR;
 
 namespace MassTransitMQ.Application.Commands.User.CreateUserCommand;
@@ -16,7 +16,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
     {
         var user = new Domain.Entities.User(request.FirstName, request.LastName, request.Email, request.Password, true, DateTime.Now);
 
-        var id = await _userRepository.CreateAsync(user, cancellationToken);
+        var id = await _userRepository.AddAsync(user, cancellationToken);
 
         return id;
     }

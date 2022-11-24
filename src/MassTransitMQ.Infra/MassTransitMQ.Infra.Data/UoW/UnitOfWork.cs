@@ -1,6 +1,5 @@
-﻿using MassTransitMQ.Infra.Data.Context;
-using MassTransitMQ.Infra.Data.UoW.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using MassTransitMQ.Domain.Interfaces.Data;
+using MassTransitMQ.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MassTransitMQ.Infra.Data.UoW
@@ -26,8 +25,8 @@ namespace MassTransitMQ.Infra.Data.UoW
             _dbContext.SavingChanges += (sender, args) 
                 => Console.WriteLine("Saving data in database...");
 
-            _dbContext.SavedChanges += (sender, args) 
-                => Console.WriteLine("{0} entities successfully recorded!", args.EntitiesSavedCount);
+            //_dbContext.SavedChanges += (sender, args) 
+            //    => Console.WriteLine("{0} entities successfully recorded!", args.EntitiesSavedCount);
 
             _dbContext.SaveChangesFailed += (sender, args) 
                 => Console.WriteLine("An error occurred while trying to process the request on the database: {0}", args.Exception.Message);

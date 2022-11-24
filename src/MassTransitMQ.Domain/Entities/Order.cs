@@ -1,9 +1,18 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace MassTransitMQ.Domain.Entities
 {
     public class Order : EntityBase
     {
+        public Order(string? number, Guid buyerId, string? address, decimal price, decimal discount, decimal deliveryPrice)
+        {
+            Number = number;
+            BuyerId = buyerId;
+            Address = address;
+            Price = price;
+            Discount = discount;
+            DeliveryPrice = deliveryPrice;
+            TotalPrice = SumOrderTotalPrice();
+        }
+
         public Order(Guid id, string? number, Guid buyerId, string? address, decimal price, decimal discount, decimal deliveryPrice)
             : base(id)
         {

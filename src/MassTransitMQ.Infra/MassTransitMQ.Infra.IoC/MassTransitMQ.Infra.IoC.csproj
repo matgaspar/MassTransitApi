@@ -5,12 +5,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="MassTransit" Version="8.0.8" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MassTransitMQ.Application\MassTransitMQ.Application.csproj" />
-    <ProjectReference Include="..\..\MassTransitMQ.Services\MassTransitMQ.Services.Background\MassTransitMQ.Services.Background.csproj" />
     <ProjectReference Include="..\MassTransitMQ.Infra.Data\MassTransitMQ.Infra.Data.csproj" />
     <ProjectReference Include="..\..\MassTransitMQ.Domain\MassTransitMQ.Domain.csproj" />
   </ItemGroup>

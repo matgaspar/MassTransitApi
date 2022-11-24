@@ -1,10 +1,8 @@
-﻿using MassTransitMQ.Domain.DTOs.Commands.User;
+﻿using MassTransitMQ.Domain.DTOs.IO.Input;
+using MassTransitMQ.Domain.DTOs.User;
 using MediatR;
 
 namespace MassTransitMQ.Application.Commands.User.CreateUserCommand;
 
-public class CreateUserCommand : CreateUser, IRequest<Guid>
-{
-    public CreateUserCommand(string? firstName, string? lastName, string? email, string? password)
-        : base(firstName, lastName, email, password) { }
-}
+public record CreateUserCommand(string? FirstName, string? LastName, string? Email, string? Password) 
+    : UserInput(FirstName, LastName, Email, Password), IRequest<Guid>;

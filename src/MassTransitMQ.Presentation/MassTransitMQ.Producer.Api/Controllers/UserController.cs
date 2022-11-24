@@ -1,8 +1,8 @@
 using MassTransitMQ.Application.Commands.User.CreateUserCommand;
 using MassTransitMQ.Application.Queries.User.FindById;
-using MassTransitMQ.Application.Queries.User.GetAllUsersQuery;
+using MassTransitMQ.Application.Queries.User.GetAll;
 using MassTransitMQ.Domain.Entities;
-using MassTransitMQ.Infra.Data.Repositories.Interfaces;
+using MassTransitMQ.Domain.Interfaces.Data.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +23,7 @@ namespace MassTransitMQ.Producer.Api.Controllers
 
         [HttpGet("")]
         public async Task<IActionResult> Get(
-            [FromQuery] GetAllUsersQuery getAllUsersQuery
+            [FromQuery] GetAllUsers getAllUsersQuery
         )
         {
             CancellationToken cancellationToken = new();
@@ -37,10 +37,8 @@ namespace MassTransitMQ.Producer.Api.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             CancellationToken cancellationToken = new();
-
-            FindById findById = new() { Id = id };
-
-            var state = await _mediator.Send(findById, cancellationToken);
+            
+            var state = await _mediator.Send(new FindUserById(id), cancellationToken);
 
             return Ok(state);
         }
@@ -62,13 +60,13 @@ namespace MassTransitMQ.Producer.Api.Controllers
             CancellationToken cancellationToken = new();
             userUpdate.SetId(id);
 
-            await _userRepository.UpdateAsync(userUpdate, cancellationToken);
+            await _userRepository.UpdateAsync(id, userUpdate, cancellationToken);
             
             return NoContent();
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             CancellationToken cancellationToken = new();
             await _userRepository.DeleteAsync(id, cancellationToken);
