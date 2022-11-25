@@ -15,9 +15,10 @@ namespace MassTransitMQ.Infra.Data.UoW
             _dbContext = dbContext;
         }
 
-        public async Task BeginTransaction()
+        public Task BeginTransaction()
         {
-            _transaction = await _dbContext.Database.BeginTransactionAsync();
+            // _transaction = await _dbContext.Database.BeginTransactionAsync();
+            return Task.CompletedTask;
         }
 
         public async Task Commit()
@@ -25,20 +26,21 @@ namespace MassTransitMQ.Infra.Data.UoW
             _dbContext.SavingChanges += (sender, args) 
                 => Console.WriteLine("Saving data in database...");
 
-            //_dbContext.SavedChanges += (sender, args) 
-            //    => Console.WriteLine("{0} entities successfully recorded!", args.EntitiesSavedCount);
+            _dbContext.SavedChanges += (sender, args)
+                => Console.WriteLine("Entity successfully recorded!");
 
             _dbContext.SaveChangesFailed += (sender, args) 
-                => Console.WriteLine("An error occurred while trying to process the request on the database: {0}", args.Exception.Message);
+                => Console.WriteLine("An error occurred while trying to process the request on the database");
 
             await _dbContext.SaveChangesAsync();
 
-            await _transaction.CommitAsync();
+            //await _transaction.CommitAsync();
         }
 
-        public async Task Rollback()
+        public Task Rollback()
         {
-            await _transaction.RollbackAsync();
+            // await _transaction.RollbackAsync();
+            return Task.CompletedTask;
         }
     }
 }

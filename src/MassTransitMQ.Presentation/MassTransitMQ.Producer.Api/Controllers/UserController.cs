@@ -1,77 +1,65 @@
 using MassTransitMQ.Application.Commands.User.CreateUserCommand;
 using MassTransitMQ.Application.Queries.User.FindById;
 using MassTransitMQ.Application.Queries.User.GetAll;
-using MassTransitMQ.Domain.Entities;
-using MassTransitMQ.Domain.Interfaces.Data.Repositories;
+using MassTransitMQ.Domain.DTOs.IO.Input;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MassTransitMQ.Producer.Api.Controllers
+namespace MassTransitMQ.Producer.Api.Controllers;
+
+[ApiController]
+[Route("v1/[controller]")]
+public class UserController : ControllerBase
 {
-    [ApiController]
-    [Route("v1/[controller]")]
-    public class UserController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public UserController(IMediator mediator)
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public UserController(IUserRepository userRepository, IMediator mediator)
-        {
-            _userRepository = userRepository;
-            _mediator = mediator;
-        }
+    [HttpGet]
+    public async Task<IActionResult> Get(
+        [FromQuery] GetAllUsers getAllUsers
+    )
+    {
+        CancellationToken cancellationToken = new();
 
-        [HttpGet("")]
-        public async Task<IActionResult> Get(
-            [FromQuery] GetAllUsers getAllUsersQuery
-        )
-        {
-            CancellationToken cancellationToken = new();
+        var users = await _mediator.Send(getAllUsers, cancellationToken);
 
-            var users = await _mediator.Send(getAllUsersQuery, cancellationToken);
+        return Ok(users);
+    }
 
-            return Ok(users);
-        }
-
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            CancellationToken cancellationToken = new();
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        CancellationToken cancellationToken = new();
             
-            var state = await _mediator.Send(new FindUserById(id), cancellationToken);
+        var state = await _mediator.Send(new FindUserById(id), cancellationToken);
 
-            return Ok(state);
-        }
+        return Ok(state);
+    }
 
-        [HttpPost("")]
-        public async Task<IActionResult> Post(CreateUserCommand createUserCommand)
-        {
-            CancellationToken cancellationToken = new();
+    [HttpPost]
+    public async Task<IActionResult> Post(CreateUserCommand createUserCommand)
+    {
+        CancellationToken cancellationToken = new();
 
-            var id = await _mediator.Send(createUserCommand, cancellationToken);
+        var id = await _mediator.Send(createUserCommand, cancellationToken);
 
 
-            return Created($"?id={id}", id);
-        }
+        return Created($"?id={id}", id);
+    }
 
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, User userUpdate)
-        {
-            CancellationToken cancellationToken = new();
-            userUpdate.SetId(id);
+    [HttpPut("{id:guid}")]
+    public Task<IActionResult> Put(Guid id, UserInput userUpdate)
+    {
+        throw new NotImplementedException();
+    }
 
-            await _userRepository.UpdateAsync(id, userUpdate, cancellationToken);
-            
-            return NoContent();
-        }
-
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            CancellationToken cancellationToken = new();
-            await _userRepository.DeleteAsync(id, cancellationToken);
-            
-            return NoContent();
-        }
+    [HttpDelete("{id:guid}")]
+    public Task<IActionResult> Delete(Guid id)
+    {
+        throw new NotImplementedException();
     }
 }

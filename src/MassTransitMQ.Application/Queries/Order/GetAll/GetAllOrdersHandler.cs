@@ -20,7 +20,7 @@ public class GetAllOrdersHandler : IRequestHandler<GetAllOrders, State<IEnumerab
 
         var data = await _orderService.GetAllAsync(request.Page, request.PageSize, cancellationToken);
 
-        if (data == null)
+        if (data == null || !data.Any())
         {
             getAll.Status = 404;
             getAll.Message = "Nenhum registro encontrado!";

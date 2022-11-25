@@ -12,5 +12,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.Property(p => p.Discount).HasPrecision(10, 2);
         builder.Property(p => p.DeliveryPrice).HasPrecision(10, 2);
         builder.Property(p => p.TotalPrice).HasPrecision(10, 2);
+        builder.Property(p => p.CreatedOn).ValueGeneratedOnAdd();
+        builder.Property(p => p.UpdatedOn).ValueGeneratedOnAddOrUpdate();
     }
 }

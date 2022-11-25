@@ -5,7 +5,7 @@ using MediatR;
 
 namespace MassTransitMQ.Application.Queries.User.GetAll;
 
-public class GetAllUsersHandler : IRequestHandler<GetAll.GetAllUsers, State<IEnumerable<UserOutput>>>
+public class GetAllUsersHandler : IRequestHandler<GetAllUsers, State<IEnumerable<UserOutput>>>
 {
     private readonly IUserService _userService;
 
@@ -14,7 +14,7 @@ public class GetAllUsersHandler : IRequestHandler<GetAll.GetAllUsers, State<IEnu
         _userService = userService;
     }
 
-    public async Task<State<IEnumerable<UserOutput>>> Handle(GetAll.GetAllUsers request, CancellationToken cancellationToken)
+    public async Task<State<IEnumerable<UserOutput>>> Handle(GetAllUsers request, CancellationToken cancellationToken)
     {
         var getAll = new State<IEnumerable<UserOutput>>();
 

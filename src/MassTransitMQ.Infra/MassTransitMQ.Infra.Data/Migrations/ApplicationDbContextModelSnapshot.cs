@@ -35,6 +35,7 @@ namespace MassTransitMQ.Infra.Data.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)");
 
                     b.Property<decimal>("DeliveryPrice")
@@ -57,6 +58,7 @@ namespace MassTransitMQ.Infra.Data.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");

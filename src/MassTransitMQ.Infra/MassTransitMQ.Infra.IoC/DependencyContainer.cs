@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using MassTransitMQ.Application.Consumer;
 using MassTransitMQ.Application.Services;
 using MassTransitMQ.Domain.Interfaces.Data;
 using MassTransitMQ.Domain.Interfaces.Data.Repositories;
@@ -16,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using System.Reflection;
 using MassTransitMQ.Application.Queries.User.FindById;
 using MassTransitMQ.Domain.Mapping;
+using MassTransitMQ.Application.Consumer.OrderConsumer;
 
 namespace MassTransitMQ.Infra.IoC;
 
@@ -43,7 +43,7 @@ public static partial class DependencyContainer
         #region MassTransit (RabbitMQ)
         services.AddMassTransit(x =>    
         {
-            x.AddConsumer<OrderConsumer>();
+            x.AddConsumer<OrderConsumer, OrderConsumerDefinition>();
             x.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host("localhost", "/", h => 
@@ -52,12 +52,12 @@ public static partial class DependencyContainer
                     h.Password("guest");
                 });
                 
-                cfg.ReceiveEndpoint("OrderService", e =>
-                {
-                    e.PrefetchCount = 10;
-                    e.UseMessageRetry(r => r.Interval(2, 100));
-                    e.ConfigureConsumer<OrderConsumer>(context);
-                });
+                //cfg.ReceiveEndpoint("OrderService", e =>
+                //{
+                //    e.PrefetchCount = 10;
+                //    //e.UseMessageRetry(r => r.Interval(2, 100));
+                //    e.ConfigureConsumer<OrderConsumer>(context);
+                //});
 
                 cfg.ConfigureEndpoints(context);
             });
@@ -84,8 +84,7 @@ public static partial class DependencyContainer
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IOrderService, OrderService>();
         #endregion
-
-
+        
         #region Workers
 
         //services.AddHostedService<ConsumerMessagingWorker>();
