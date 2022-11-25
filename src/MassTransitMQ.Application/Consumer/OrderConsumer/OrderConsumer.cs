@@ -3,7 +3,7 @@ using MassTransitMQ.Application.Commands.Order.CreateCommand;
 using MassTransitMQ.Domain.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 
-namespace MassTransitMQ.Application.Consumer
+namespace MassTransitMQ.Application.Consumer.OrderConsumer
 {
     public class OrderConsumer : IConsumer<CreateOrderCommand>
     {
@@ -21,6 +21,8 @@ namespace MassTransitMQ.Application.Consumer
             var id = await _orderService.AddAsync(context.Message);
 
             _logger.LogInformation("Order [{id}] created!", id);
+
+            await context.ConsumeCompleted;
         }
     }
 }

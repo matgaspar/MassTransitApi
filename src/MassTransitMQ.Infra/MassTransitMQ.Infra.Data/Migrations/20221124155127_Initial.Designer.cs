@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MassTransitMQ.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221123001537_Initial")]
+    [Migration("20221124155127_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -38,6 +38,7 @@ namespace MassTransitMQ.Infra.Data.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)");
 
                     b.Property<decimal>("DeliveryPrice")
@@ -60,6 +61,7 @@ namespace MassTransitMQ.Infra.Data.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");

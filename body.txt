@@ -1,0 +1,7 @@
+## Problemas ajustados 
+- [x] Ajustado problema de no momento da criação do pedido estar gravando várias vezes o
+  mesmo pedido na base; 
+- [x] criado middleware para manipulação de exceptions; 
+- [x] Ajustado migrations referente a
+  tabela Order para definir valores padrões para as propriedades/colunas CreatedOn e UpdatedOn; 
+- [x] entre outros...

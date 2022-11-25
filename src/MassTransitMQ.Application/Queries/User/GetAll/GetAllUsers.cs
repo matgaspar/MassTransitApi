@@ -5,5 +5,5 @@ using MediatR;
 
 namespace MassTransitMQ.Application.Queries.User.GetAll;
 
-public record GetAllUsers(int Page, int PageSize) 
+public record GetAllUsers(int Page = 1, int PageSize = 10) 
     : PaginationRequest(Page, PageSize), IRequest<State<IEnumerable<UserOutput>>>;
